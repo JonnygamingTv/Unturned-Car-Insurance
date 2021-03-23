@@ -21,14 +21,15 @@ namespace CarInsurance
 
             ushort vehicle = CarInsurance.Instance.PlayerDeservesInsurance(client.CSteamID);
 
-            if(vehicle > 0)
+            if(vehicle > 0 && client.Experience >= 1000)
             {
                 VehicleTool.giveVehicle(client.Player, vehicle);
                 UnturnedChat.Say(caller, "Successfully got your car back from the insurance!");
+                client.Experience -= 1000;
             }
             else
             {
-                UnturnedChat.Say(caller, "You don't have any insurance.");
+                UnturnedChat.Say(caller, "You don't have any insurance or not enough experience.");
             }  
         }
     }
