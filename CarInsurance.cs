@@ -13,19 +13,20 @@ namespace CarInsurance
 
         protected override void Load()
         {
-            VehicleManager.onDamageVehicleRequested += new DamageVehicleRequestHandler(OnVehicleDamage);
+            VehicleManager.onDamageVehicleRequested += OnVehicleDamage;
             Instance = this;
             damagedOwners = new List<Info>();
         }
 
         public ushort PlayerDeservesInsurance(CSteamID player)
         {
-            for (int i = 0; i < damagedOwners.Count; i++)
+            for (int i = damagedOwners.Count; i > -1; i--)
             {
                 if(damagedOwners[i].vehicleOwner == player)
                 {
                     ushort toReturn = damagedOwners[i].vehicleId;
-                    damagedOwners.RemoveAt(i);
+                    damagedOwners[i] = damagedOwners[damagedOwners.Count - 1]; // move last element to current position, basically replacing current obj with the last obj
+                    damagedOwners.RemoveAt(damagedOwners.Count-1); // by using .RemoveAt() for the last element we get O(1)
                     return toReturn;
                 }
             }
@@ -35,7 +36,7 @@ namespace CarInsurance
 
         protected override void Unload()
         {
-            VehicleManager.onDamageVehicleRequested -= new DamageVehicleRequestHandler(OnVehicleDamage);
+            VehicleManager.onDamageVehicleRequested -= OnVehicleDamage;
             Instance = null;
         }
 
