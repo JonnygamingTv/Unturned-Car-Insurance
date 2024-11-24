@@ -40,6 +40,21 @@ namespace CarInsurance
 
             return 0;
         }
+        public Info PlayerGetInsurance(CSteamID player)
+        {
+            for (int i = damagedOwners.Count - 1; i > -1; i--)
+            {
+                if (damagedOwners[i].vehicleOwner == player)
+                {
+                    Info toReturn = damagedOwners[i];
+                    damagedOwners[i] = damagedOwners[damagedOwners.Count - 1]; // move last element to current position, basically replacing current obj with the last obj
+                    damagedOwners.RemoveAt(damagedOwners.Count - 1); // by using .RemoveAt() for the last element we get O(1)
+                    return toReturn;
+                }
+            }
+
+            return null;
+        }
 
         protected override void Unload()
         {

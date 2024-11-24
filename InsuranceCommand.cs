@@ -19,11 +19,11 @@ namespace CarInsurance
         {
             UnturnedPlayer client = caller as UnturnedPlayer;
 
-            ushort vehicle = CarInsurance.Instance.PlayerDeservesInsurance(client.CSteamID);
+            Info vehicle = CarInsurance.Instance.PlayerGetInsurance(client.CSteamID);
 
-            if(vehicle > 0 && client.Experience >= CarInsurance.Instance.Configuration.Instance.Cost)
+            if(vehicle != null && client.Experience >= CarInsurance.Instance.Configuration.Instance.Cost)
             {
-                VehicleTool.giveVehicle(client.Player, vehicle);
+                VehicleManager.SpawnVehicleV3((VehicleAsset)Assets.FindBaseVehicleAssetByGuidOrLegacyId(vehicle.vehicleGuid, vehicle.vehicleId), 0, 0, 0, client.Position, client.Player.transform.rotation, false, false, false, false, 100, 100, 100, client.CSteamID, client.SteamGroupID, false, new byte[0][], byte.MaxValue);
                 UnturnedChat.Say(caller, CarInsurance.Instance.Translate("success"));
                 client.Experience -= CarInsurance.Instance.Configuration.Instance.Cost;
             }
