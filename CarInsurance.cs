@@ -3,6 +3,7 @@ using SDG.Unturned;
 using Steamworks;
 using System.Linq;
 using System.Collections.Generic;
+using Rocket.API.Collections;
 
 namespace CarInsurance
 {
@@ -10,6 +11,11 @@ namespace CarInsurance
     {
         public List<Info> damagedOwners { get; private set; }
         public static CarInsurance Instance { get; private set; }
+        public override TranslationList DefaultTranslations => new TranslationList()
+        {
+            {"success","Successfully got your car back from the insurance!"},
+            {"fail","You don't have any insurance or not enough experience."}
+        };
 
         protected override void Load()
         {
@@ -20,7 +26,7 @@ namespace CarInsurance
 
         public ushort PlayerDeservesInsurance(CSteamID player)
         {
-            for (int i = damagedOwners.Count; i > -1; i--)
+            for (int i = damagedOwners.Count-1; i > -1; i--)
             {
                 if(damagedOwners[i].vehicleOwner == player)
                 {

@@ -24,12 +24,12 @@ namespace CarInsurance
             if(vehicle > 0 && client.Experience >= 1000)
             {
                 VehicleTool.giveVehicle(client.Player, vehicle);
-                UnturnedChat.Say(caller, "Successfully got your car back from the insurance!");
+                UnturnedChat.Say(caller, CarInsurance.Instance.Translate("success"));
                 client.Experience -= 1000;
             }
             else
             {
-                UnturnedChat.Say(caller, "You don't have any insurance or not enough experience.");
+                UnturnedChat.Say(caller, CarInsurance.Instance.Translate("fail"));
             }  
         }
     }
