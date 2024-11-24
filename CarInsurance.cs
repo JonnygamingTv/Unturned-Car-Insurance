@@ -4,10 +4,11 @@ using Steamworks;
 using System.Linq;
 using System.Collections.Generic;
 using Rocket.API.Collections;
+using System;
 
 namespace CarInsurance
 {
-    class CarInsurance : RocketPlugin
+    class CarInsurance : RocketPlugin<Conf>
     {
         public List<Info> damagedOwners { get; private set; }
         public static CarInsurance Instance { get; private set; }
@@ -50,7 +51,7 @@ namespace CarInsurance
         {
             if (vehicle.isLocked && vehicle.health - pendingTotalDamage <= 0)
             {
-                Info info = new Info { vehicleId = vehicle.id, vehicleOwner = vehicle.lockedOwner };
+                Info info = new Info { vehicleId = vehicle.id, vehicleGuid = vehicle.asset.GUID, vehicleOwner = vehicle.lockedOwner };
                 
                 if (!damagedOwners.Any(x => x.vehicleOwner == info.vehicleOwner))
                 {
@@ -63,6 +64,7 @@ namespace CarInsurance
     public class Info
     {
         public ushort vehicleId;
+        public Guid vehicleGuid;
         public CSteamID vehicleOwner;
     }
 }

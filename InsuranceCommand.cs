@@ -21,11 +21,11 @@ namespace CarInsurance
 
             ushort vehicle = CarInsurance.Instance.PlayerDeservesInsurance(client.CSteamID);
 
-            if(vehicle > 0 && client.Experience >= 1000)
+            if(vehicle > 0 && client.Experience >= CarInsurance.Instance.Configuration.Instance.Cost)
             {
                 VehicleTool.giveVehicle(client.Player, vehicle);
                 UnturnedChat.Say(caller, CarInsurance.Instance.Translate("success"));
-                client.Experience -= 1000;
+                client.Experience -= CarInsurance.Instance.Configuration.Instance.Cost;
             }
             else
             {
