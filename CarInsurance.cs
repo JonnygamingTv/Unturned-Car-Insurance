@@ -22,7 +22,7 @@ namespace CarInsurance
         {
             VehicleManager.onDamageVehicleRequested += OnVehicleDamage;
             Instance = this;
-            damagedOwners = new List<Info>();
+            damagedOwners = new List<Info>(); // alt. Dictionary<playerId, insuranceList>
         }
 
         public ushort PlayerDeservesInsurance(CSteamID player)
@@ -32,8 +32,9 @@ namespace CarInsurance
                 if(damagedOwners[i].vehicleOwner == player)
                 {
                     ushort toReturn = damagedOwners[i].vehicleId;
-                    damagedOwners[i] = damagedOwners[damagedOwners.Count - 1]; // move last element to current position, basically replacing current obj with the last obj
-                    damagedOwners.RemoveAt(damagedOwners.Count-1); // by using .RemoveAt() for the last element we get O(1)
+                    int lastIndex = damagedOwners.Count - 1;
+                    damagedOwners[i] = damagedOwners[lastIndex]; // move last element to current position, basically replacing current obj with the last obj
+                    damagedOwners.RemoveAt(lastIndex); // by using .RemoveAt() for the last element we get O(1)
                     return toReturn;
                 }
             }
@@ -47,8 +48,9 @@ namespace CarInsurance
                 if (damagedOwners[i].vehicleOwner == player)
                 {
                     Info toReturn = damagedOwners[i];
-                    damagedOwners[i] = damagedOwners[damagedOwners.Count - 1]; // move last element to current position, basically replacing current obj with the last obj
-                    damagedOwners.RemoveAt(damagedOwners.Count - 1); // by using .RemoveAt() for the last element we get O(1)
+                    int lastIndex = damagedOwners.Count - 1;
+                    damagedOwners[i] = damagedOwners[lastIndex]; // move last element to current position, basically replacing current obj with the last obj
+                    damagedOwners.RemoveAt(lastIndex); // by using .RemoveAt() for the last element we get O(1)
                     return toReturn;
                 }
             }
