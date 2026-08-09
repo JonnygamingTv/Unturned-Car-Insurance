@@ -38,8 +38,8 @@ jobs:
         with:
           name: CarInsurance-Plugin
           path: |
-            bin/Release/net48/CarInsurance.dll
-            bin/Release/net48/CarInsurance.xml
+            bin/Release/CarInsurance.dll
+            bin/Release/CarInsurance.xml
           if-no-files-found: error
 
       - name: Create Release
@@ -47,6 +47,6 @@ jobs:
         with:
           tag_name: v${{ github.run_number }}
           prerelease: true
-          files: bin/Release/net48/CarInsurance.dll
+          files: bin/Release/CarInsurance.dll
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
